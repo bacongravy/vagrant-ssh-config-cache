@@ -35,9 +35,20 @@ $ vagrant ssh-config-cache reset
 
 ## Development
 
+You can test with a vendored Vagrant:
+
 ```bash
 $ bin/setup
 $ bundle exec vagrant ssh-config-cache
+```
+
+...or by building and installing the gem into the system Vagrant:
+
+```bash
+$ bundle exec rake build
+$ vagrant plugin uninstall vagrant-ssh-config-cache
+$ vagrant plugin install pkg/vagrant-ssh-config-cache-*.gem
+$ vagrant ssh-config-cache -h
 ```
 
 ## Contributing
