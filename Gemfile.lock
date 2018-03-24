@@ -23,7 +23,7 @@ GIT
 PATH
   remote: .
   specs:
-    vagrant-ssh-config-cache (0.1.0.pre0)
+    vagrant-ssh-config-cache (0.1.0)
 
 GEM
   remote: https://rubygems.org/
