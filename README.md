@@ -1,6 +1,8 @@
-# [WIP] vagrant-ssh-config-cache
+# vagrant-ssh-config-cache
 
 `vagrant-ssh-config-cache` is a [Vagrant](http://vagrantup.com) plugin for caching the ssh-config of running boxes. It automatically caches the ssh-config of machines anytime they are brought up, and removes the caches when the machines are halted or destroyed.
+
+Caches for each machine are stored at `.vagrant/machines/<name>/ssh-config-cache`. The content each cache file is a valid command-line invocation of ssh.
 
 ## Installation
 
@@ -29,8 +31,11 @@ Usage: vagrant ssh-config-cache update [target...]
 
 ## Example
 
+Update the caches for all machines and then connect to the machine named 'default' using the cached ssh config:
+
 ```bash
-$ vagrant ssh-config-cache reset
+$ vagrant ssh-config-cache update
+$ source .vagrant/machines/default/ssh-config-cache
 ```
 
 ## Development
@@ -50,6 +55,8 @@ $ vagrant plugin uninstall vagrant-ssh-config-cache
 $ vagrant plugin install pkg/vagrant-ssh-config-cache-*.gem
 $ vagrant ssh-config-cache -h
 ```
+
+To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
