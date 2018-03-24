@@ -21,9 +21,9 @@ class VagrantPlugins::SSHConfigCache::Command < Vagrant.plugin('2', :command)
   def register_subcommands
     @subcommands = Vagrant::Registry.new
 
-    @subcommands.register('ssh') do
-      require_relative 'command/ssh'
-      SSH
+    @subcommands.register('update') do
+      require_relative 'command/update'
+      Update
     end
 
     @subcommands.register('reset') do

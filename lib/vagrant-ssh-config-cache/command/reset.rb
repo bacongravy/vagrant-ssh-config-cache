@@ -3,7 +3,7 @@ class VagrantPlugins::SSHConfigCache::Command::Reset < Vagrant.plugin('2', :comm
     options = {}
 
     opts = OptionParser.new do |o|
-      o.banner = "Usage: vagrant ssh-config-cache reset [target]"
+      o.banner = "Usage: vagrant ssh-config-cache reset [target...]"
     end
 
     @argv.shift
@@ -11,20 +11,12 @@ class VagrantPlugins::SSHConfigCache::Command::Reset < Vagrant.plugin('2', :comm
     argv = parse_options(opts)
     return if !argv
 
-    reset_config_cache(argv)
-  end
-
-  private
-
-  def reset_config_cache(target)
-    with_target_vms(target) do |machine|
-      ssh_config_cache_file = machine.data_dir.to_s + '/../ssh-config-cache'
-      if File.exist?(ssh_config_cache_file)
-        @env.ui.warn("Deleting file: #{ssh_config_cache_file}")
-        File.delete(ssh_config_cache_file)
-      end
+    with_target_vms(argv) do |machine|
+      require_relative '../action'
+      @env.action_runner.run(VagrantPlugins::SSHConfigCache::Action.action_remove_cache, :machine => machine)
     end
 
     0
   end
+
 end

@@ -1,6 +1,6 @@
 # [WIP] vagrant-ssh-config-cache
 
-`vagrant-ssh-config-cache` is a [Vagrant](http://vagrantup.com) plugin for caching the ssh-config of running boxes. It automatically caches the ssh-config of machines anytime they are brought up, and removes the caches when the machines are halted or destroyed. The plugin also provides an `ssh` subcommand which uses the cached ssh-config to ssh into machines.
+`vagrant-ssh-config-cache` is a [Vagrant](http://vagrantup.com) plugin for caching the ssh-config of running boxes. It automatically caches the ssh-config of machines anytime they are brought up, and removes the caches when the machines are halted or destroyed.
 
 ## Installation
 
@@ -14,17 +14,17 @@ $ vagrant plugin install vagrant-ssh-config-cache
 
 ```bash
 $ vagrant ssh-config-cache -h
+Usage: vagrant ssh-config-cache <command> [<args>]
 
-Usage: vagrant ssh-config-cache <subcommand> [target]
+Available subcommands:
+     reset
+     update
 
-Subcommands:
+$ vagrant ssh-config-cache reset -h
+Usage: vagrant ssh-config-cache reset [target...]
 
-        ssh                          Use the cached ssh-config to ssh into the target
-        reset                        Discards any ssh-config that may already be cached in the environment
-
-Options:
-
-    -h, --help                       Print this help
+$ vagrant ssh-config-cache update -h
+Usage: vagrant ssh-config-cache update [target...]
 ```
 
 ## Example
