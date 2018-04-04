@@ -4,6 +4,11 @@
 
 Caches for each machine are stored at `.vagrant/machines/<name>/ssh-config-cache`. The content each cache file is a valid command-line invocation of ssh.
 
+## Why?
+
+
+Sometimes you have a Vagrantfile that takes a long time to evaluate. This overhead is incurred every time you run `vagrant ssh`. In a test environment, with a specific Vagrantfile, ssh-config caching was observed to reduce connection times from 16 seconds, to less than one second.
+
 ## Installation
 
 Use `vagrant plugin` to install the gem in your Vagrant environment:
@@ -37,6 +42,36 @@ Update the caches for all machines and then connect to the machine named 'defaul
 $ vagrant ssh-config-cache update
 $ source .vagrant/machines/default/ssh-config-cache
 ```
+
+## vssh
+
+The following `vssh` bash function can be used in place of invoking `vagrant ssh <target>`:
+
+```bash
+function vssh() {
+  if [ $# -eq 0 ]; then
+    echo "Error: Please specify a vagrant machine."
+    return
+  fi
+  VAGRANT_MACHINE=$1
+  SSH_CONFIG_CACHE_FILE=$PWD/.vagrant/machines/$VAGRANT_MACHINE/ssh-config-cache
+  if [ ! -f "$SSH_CONFIG_CACHE_FILE" ]; then
+    echo "Notice: The cache for $VAGRANT_MACHINE does not exist. Updating the cache."
+    vagrant SSH_CONFIG_CACHE_FILE update $VAGRANT_MACHINE
+  fi
+  if [ -f "$SSH_CONFIG_CACHE_FILE" ]; then
+    source $SSH_CONFIG_CACHE_FILE
+    if [ $? -eq 255 ]; then
+      echo "Error: Unable to connect to the machine. Deleting the cache."
+      rm -f $SSH_CONFIG_CACHE_FILE
+    fi
+  else
+    echo "Error: Unable to update the cache for $VAGRANT_MACHINE. Please verify that the machine is running."
+  fi
+}
+```
+
+Example: `$ vssh default`
 
 ## Development
 
