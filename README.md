@@ -57,7 +57,7 @@ function vssh() {
   SSH_CONFIG_CACHE_FILE=$PWD/.vagrant/machines/$VAGRANT_MACHINE/ssh-config-cache
   if [ ! -f "$SSH_CONFIG_CACHE_FILE" ]; then
     echo "Notice: The cache for $VAGRANT_MACHINE does not exist. Updating the cache."
-    vagrant SSH_CONFIG_CACHE_FILE update $VAGRANT_MACHINE
+    vagrant ssh-config-cache update $VAGRANT_MACHINE
   fi
   if [ -f "$SSH_CONFIG_CACHE_FILE" ]; then
     source $SSH_CONFIG_CACHE_FILE
