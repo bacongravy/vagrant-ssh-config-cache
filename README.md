@@ -73,6 +73,12 @@ function vssh() {
 
 Example: `$ vssh default`
 
+## Acknowledgements
+
+This project was inspired by [vagrant_ssh_cache](https://github.com/tkishel/vagrant_ssh_cache). This project improves on that one by being a vagrant plugin that updates the cache automatically when the machine is brought up.
+
+Thanks for the idea, Tom!
+
 ## Development
 
 You can test with a vendored Vagrant:
